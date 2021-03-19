@@ -1,3 +1,8 @@
+In this script , spark SQL sript was written to show the outiers in dataset and according to screenshot atthaced it was showed 
+that no outliers seen , outliers is very sensitive issues  and it have different ways to calculate such as , the noramal distributions curve , mean absloute value 
+and quantiles method , the outcomes of those methods depends on dataset and data distribuitions around average .
+====================================================================================================================================
+
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.sql._
 import org.apache.spark.sql.types._
