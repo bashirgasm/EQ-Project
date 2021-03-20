@@ -41,12 +41,9 @@ val crossjoindata = requestdata.crossJoin(poidata)
 val distdata = crossjoindata
 .withColumn("a", pow(sin(toRadians($"Latitude" - $"PoiLatitude") / 2), 2) + cos(toRadians($"PoiLatitude")) * cos(toRadians($"Latitude")) * pow(sin(toRadians($"Longitude" - $"PoiLongitude") / 2), 2))
 .withColumn("distance", atan2(sqrt($"a"), sqrt(-$"a" + 1)) * 2 * 6371)
-val groupdata = distdata.groupBy("POIID").agg(min("distance") as "Min_Distance",avg("distance") as Avg_Distance , stddev("distance") as STD_Distance)
-.withColumn("outlierfilter",expr("Min_Distance < Avg_Distance - 2 * STD_Distance")).show(false)
+val groupdata = distdata.groupBy("POIID").agg(min("distance") as "Min_Distance",avg("distance") as "Avg_Distance" , stddev("distance") as "STD_Distance")
+.withColumn("outlierfilter",expr("Min_Distance > Avg_Distance - 2 * STD_Distance") && expr("Min_Distance < Avg_Distance - 2 * STD_Distance")).show(false)
+
 ====================================================================================
-i defined two filter value to catch  up fiter but something wrong :
-val lowerrange = "Min_Distance" >"Avg_Distance"  + 2 * STD_Distance
-val upperrange = "Min_Distance" >"Avg_Distance"  - 2 * STD_Distance
-val outlierfilter = distdata.filter("lowerrange").filter("upperrange").show(false)
 
 
