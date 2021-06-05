@@ -63,6 +63,14 @@ val analysis2 = finaldata.where(col("min(distance)")  > lowerRange  && col("min(
 val analysis3 =analysis2.groupBy("POIID").agg(
 avg("min(distance)") as "Avg(Without Outliers)", stddev("min(distance)") as "STD(Without Outliers)").show()
 //**************************================================================*************************************
+//**************************======================== Model Implementation ========================********************************* 
+
+val analysis2 = finaldata.where(col("min(distance)")  > -10 && col("min(distance)") < 10)
+
+val analysis3 =analysis2.groupBy("POIID").agg(
+avg("min(distance)") as "Avg(Without Outliers)", stddev("min(distance)") as "STD(Without Outliers)").show()
+
+
 //  Radious and Density with outliers Calculations
 val radiousdatawith_outliers = finaldata.groupBy("POIID").agg(max("min(distance)") 
 as "Radious with outliers", count("min(distance)") as "Count With outliers")
