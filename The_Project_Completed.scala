@@ -65,9 +65,9 @@ avg("min(distance)") as "Avg(Without Outliers)", stddev("min(distance)") as "STD
 //**************************================================================*************************************
 //**************************======================== Model Implementation ========================********************************* 
 
-val analysis2 = finaldata.where(col("min(distance)")  > -10 && col("min(distance)") < 10)
+val modelscale = finaldata.where(col("min(distance)")  > -10 && col("min(distance)") < 10)
 
-val analysis3 =analysis2.groupBy("POIID").agg(
+val implementation=modelscale.groupBy("POIID").agg(
 avg("min(distance)") as "Avg(Without Outliers)", stddev("min(distance)") as "STD(Without Outliers)").show()
 
 
